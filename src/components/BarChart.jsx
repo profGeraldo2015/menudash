@@ -21,6 +21,7 @@ ChartJS.register(
   Legend
 );
 
+
 const BarChart = () => {
 
   const [charData, setCharData] = useState({
@@ -40,8 +41,21 @@ const BarChart = () => {
           backgroundColor: "rgb(53,162,235, 0.4)",
         },
       ],
-    });
-  }, []);
+    })
+    setCharOptions({
+      plugins: {
+          legend: {
+              position: 'top',
+          },
+          title: {
+              display: true,
+              text: 'Daily Revenue'
+          }
+      },
+      maintainAspectRatio: false,
+      responsive: true
+  })
+  }, [])
 
   return (
     <>

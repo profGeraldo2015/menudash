@@ -1,0 +1,14 @@
+//import Sidebar from '@/components/Sidebar'
+/*
+
+Build a next.js user dashboard - tailwind css chart.js
+canal code commerce 
+
+Tasks:
+
+- Implements :
+login with jwt token
+context api
+
+
+*/
