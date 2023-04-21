@@ -5,9 +5,29 @@ import api from '../../services/api'
 import { useState } from 'react';
 
 
-const Movimento = ({ registros: fetchedMovimento }) => {
+const Movimento = ({ registros: fetchedMovimento , ok }) => {
 
     const [registros, setRegistros] = useState(fetchedMovimento);
+
+//teste para verificar se tem registor ou nao se a api esta ligada
+//implementar alguma coisa que mostre ao usuario ligar o processo da api
+if (ok) console.log('tem registros')
+else console.log('nao tem')
+
+type registro = {
+
+    id: number;
+    nome: string;
+    cpf: string;
+}
+
+const montaRegistros = ({id,nome,cpf}: registro)=>{
+    console.log(id,nome,cpf)
+}
+
+
+montaRegistros({id:1,nome:"Jose",cpf:12345678-98})
+
 
     return (
         <div className='bg-gray-100 min-h-screen'>
@@ -54,15 +74,22 @@ export const getServerSideProps = async () => {
     try {
         const { data } = await api.get("/movimentos");
 
-        console.log("data ", data.response);
+        //console.log("data ", data.response);
 
         return {
             props: {
                 registros: data.response,
+                ok : true,
             },
         };
     } catch (err) {
-        console.log(err);
+        //console.log(err);
+        return {
+            props: {
+                registros: [],
+                ok : false
+            },
+        };
     }
     //return data;
 };

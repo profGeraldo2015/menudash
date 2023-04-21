@@ -5,6 +5,7 @@ import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 
 
 export default function Plano({ registros: fetchedPlano }) {
+
   const [registros, setRegistros] = useState(fetchedPlano);
 
   return (
@@ -57,7 +58,7 @@ export const getServerSideProps = async () => {
   try {
     const { data } = await api.get("/planos");
 
-    console.log("data ", data.response);
+    //console.log("data ", data.response);
 
     return {
       props: {
@@ -66,6 +67,7 @@ export const getServerSideProps = async () => {
     };
   } catch (err) {
     console.log(err);
+    
   }
   //return data;
 };
