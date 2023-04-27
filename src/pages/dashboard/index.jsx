@@ -1,5 +1,7 @@
 import Header from '@/components/Header'
-import Login from '@/components/Login'
+import TopCards2 from '@/components/TopCards2'
+import BarChart from '@/components/BarChart'
+import RecentMovs from '@/components/RecentMovs'
 
 import Head from 'next/head'
 import Image from 'next/image'
@@ -16,8 +18,11 @@ export default function Home() {
             </Head>
             <main className='bg-gray-100 min-h-screen'>
                 <Header teste="Texto"/>
-                <Login/>
-                
+                <TopCards2/>
+                <div className='p-4 grid md:grid-cols-3 grid-cols-1 gp-4'>
+                    <BarChart/>
+                    <RecentMovs/>
+                </div>
             </main>
         </>
     )

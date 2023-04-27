@@ -9,8 +9,18 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+
+
 import { Bar } from "react-chartjs-2";
 //import  faker  from 'faker';
+
+const buscaMovto = (data) => {
+  fetch("http://localhost:3000/movimentacao/:data")
+  .then((response)=>response.json())
+  .then((response)=>{})
+  .catch((err)=>console.log(err))
+}
+
 
 ChartJS.register(
   CategoryScale,
