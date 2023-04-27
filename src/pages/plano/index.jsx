@@ -6,6 +6,8 @@ import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 
 export default function Plano({ registros: fetchedPlano }) {
 
+const userLogado = "Zezinho da Coves"
+
   const [registros, setRegistros] = useState(fetchedPlano);
 
   return (
@@ -13,16 +15,16 @@ export default function Plano({ registros: fetchedPlano }) {
       
       <div className="bg-gray-100 min-h-screen">
         <div className="flex justify-between p-4">
-          <h2>Categorias</h2>
-          <h2>Welcome Back, Clint</h2>
+          <h2>Plano de Contas</h2>
+          <h2>Welcome Back, {userLogado}</h2>
         </div>
         <div className="p-4">
           <div className="w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto">
             <div className="my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer">
-              <span>Name</span>
-              <span className="sm:text-left text-right">Email</span>
-              <span className="hidden md:grid">Last Order</span>
-              <span className="hidden sm:grid">Method</span>
+              <span>Conta</span>
+              <span className="sm:text-left text-right">Descrição</span>
+              <span className="hidden md:grid">Saldo inicial</span>
+              <span className="hidden sm:grid">Data</span>
             </div>
             <ul>
               {registros.map((movto, id) => (
@@ -66,7 +68,13 @@ export const getServerSideProps = async () => {
       },
     };
   } catch (err) {
-    console.log(err);
+    //console.log(err);
+    return {
+      props: {
+          registros: [],
+          ok : false
+      },
+  };
     
   }
   //return data;

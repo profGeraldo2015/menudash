@@ -1,95 +1,110 @@
-import React from 'react';
-import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
+import React from "react";
+import { BsPersonFill, BsThreeDotsVertical } from "react-icons/bs";
 //port { data } from '../../data/data.js';
-import api from '../../services/api'
-import { useState } from 'react';
+import api from "../../services/api";
+import { useState } from "react";
 
+const Movimento = ({ registros: fetchedMovimento, ok, campos }) => {
+  //console.log('campos vindo da query dentro do next ', campos)
 
-const Movimento = ({ registros: fetchedMovimento , ok }) => {
+  const [camposDB, setCamposDB] = useState(campos);
+  const [registros, setRegistros] = useState(fetchedMovimento);
 
-    const [registros, setRegistros] = useState(fetchedMovimento);
+  if (ok) {
+    //usar registros para fazer a tela de entrada de dados inclusao
+    for (let i = 0; i < camposDB.length; i++) {
+      console.log("campo vindo da query ", camposDB[i]);
+      console.log(camposDB[1])
+    }
+  } else console.log("nao tem");
 
-//teste para verificar se tem registor ou nao se a api esta ligada
-//implementar alguma coisa que mostre ao usuario ligar o processo da api
-if (ok) console.log('tem registros')
-else console.log('nao tem')
-
-type registro = {
-
+  /*type registro = {
+    
     id: number;
     nome: string;
     cpf: string;
 }
 
-const montaRegistros = ({id,nome,cpf}: registro)=>{
-    console.log(id,nome,cpf)
-}
+linha 52<!--BsPersonFill className='text-purple-800' /-->
+
+*/
+
+  return (
 
 
-montaRegistros({id:1,nome:"Jose",cpf:12345678-98})
 
+    <div className="bg-gray-100 min-h-screen">
+      <div className="flex justify-between p-4">
+        <h2>Movimentos</h2>
+        <h2>Welcome Back, Clint</h2>
+      </div>
+      <div className="p-4">
+        <div className="w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto">
+          <div className="my-3 p-2 grid md:grid-cols-7 sm:grid-cols-3 grid-cols-2 items-center justify-left cursor-pointer">
+            <span>{camposDB[1]}</span>
+            <span>Débito</span>
+            <span className="sm:text-left text-right">Histórico</span>
+            <span className="sm:text-left text-right">Observação</span>
 
-    return (
-        <div className='bg-gray-100 min-h-screen'>
-            <div className='flex justify-between p-4'>
-                <h2>Movimentos</h2>
-                <h2>Welcome Back, Clint</h2>
-            </div>
-            <div className='p-4'>
-                <div className='w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto'>
-                    <div className='my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
-                        <span>Name</span>
-                        <span className='sm:text-left text-right'>Email</span>
-                        <span className='hidden md:grid'>Last Order</span>
-                        <span className='hidden sm:grid'>Method</span>
-                    </div>
-                    <ul>
-                        {registros.map((movto, id) => (
-                            <li key={id} className='bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer'>
-                                <div className='flex items-center'>
-                                    <div className='bg-purple-100 p-3 rounded-lg'>
-                                        <BsPersonFill className='text-purple-800' />
-                                    </div>
-                                    <p className='pl-4'>{movto.debito + ' ' + movto.credito}</p>
-                                </div>
-                                <p className='text-gray-600 sm:text-left text-right'>{movto.hist}</p>
-                                <p className='hidden md:flex'>{movto.dt_vencto}</p>
-                                <div className='sm:flex hidden justify-between items-center'>
-                                    <p>{movto.valor}</p>
-                                    <BsThreeDotsVertical />
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
+            <span className="sm:text-left text-right">Vencimento</span>
+            <span className="hidden md:grid">Valor</span>
+          </div>
+          <ul>
+            {registros.map((movto, id) => (
+              <li
+                key={id}
+                className="bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 grid md:grid-cols-4 sm:grid-cols-3 grid-cols-2 items-center justify-between cursor-pointer"
+              >
+                <div className="flex items-center">
+                  <div className="bg-green-200 p-2 rounded-lg">
+                    <p className="pl-4">{movto.credito}</p>
+                  </div>
+                  <div className="bg-red-400 p-2 rounded-lg">
+                    <p className="pl-4">{movto.debito}</p>
+                  </div>
                 </div>
-            </div>
+                <p className="text-gray-600 sm:text-left text-right">
+                  {movto.hist}
+                </p>
+                <p className="text-gray-600 sm:text-left text-right">
+                  {movto.obs}
+                </p>
+                <p className="hidden md:flex">{movto.dt_vencto}</p>
+                <div className="sm:flex hidden justify-between items-center">
+                  <p>{movto.valor}</p>
+                  <BsThreeDotsVertical />
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default Movimento;
 
-
 export const getServerSideProps = async () => {
-    try {
-        const { data } = await api.get("/movimentos");
+  try {
+    const { data } = await api.get("/movimentos");
 
-        //console.log("data ", data.response);
-
-        return {
-            props: {
-                registros: data.response,
-                ok : true,
-            },
-        };
-    } catch (err) {
-        //console.log(err);
-        return {
-            props: {
-                registros: [],
-                ok : false
-            },
-        };
-    }
-    //return data;
+    return {
+      props: {
+        registros: data.response,
+        campos: data.campos,
+        ok: true,
+      },
+    };
+  } catch (err) {
+    //console.log(err);
+    return {
+      props: {
+        registros: [],
+        campos: [],
+        ok: false,
+      },
+    };
+  }
+  //return data;
 };
