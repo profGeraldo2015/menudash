@@ -2,11 +2,12 @@ import Header from '@/components/Header'
 import TopCards2 from '@/components/TopCards2'
 import BarChart from '@/components/BarChart'
 import RecentMovs from '@/components/RecentMovs'
-
+import { useState } from 'react'
+import api from '@/services/api'
 import Head from 'next/head'
 import Image from 'next/image'
 
-export default function Home() {
+export default function Dashboard() {
     
     return (
         <>

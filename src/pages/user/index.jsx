@@ -1,36 +1,69 @@
 import UserList from "@/components/UserList";
 import React, { useState } from "react";
 import api from "../../services/api";
+import { useUsers } from "@/hooks/useUsers";
 
 const User = ({ registros: fetchedUser }) => {
+  // const { userss } = useUsers();
+
+  //console.log("vindo do hook ", userss);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const [users, setUsers] = useState(fetchedUser);
 
-  const [registros, setRegistros] = useState(fetchedUser);
+  //const [registros, setRegistros] = useState(fetchedUser);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(`Email: ${email}\nPassword: ${password}`);
   };
 
-  console.log("users antes do component ", registros);
+  // console.log("users antes do component ", userss);
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-      <UserList users={users} />
-    </div>
+    <>
+      <div className="flex h-screen justify-center items-center">
+        <form
+          className="bg-white p-10 rounded-lg shadow-md"
+          onSubmit={handleSubmit}
+        >
+          <input
+            type="email"
+            placeholder="Digite seu E-mail"
+            value={email}
+            onChange={(e) => [setEmail(e.target.value), setError("")]}
+          />
+          <input
+            type="password"
+            placeholder="Digite a senha"
+            value={password}
+            onChange={(e) => [setPassword(e.target.value), setError("")]}
+          />
+          <button
+            type="submit"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Entrar
+          </button>
+        </form>
+      </div>
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-100"></div>
+    </>
   );
 };
 
+//<UserList users={users} />
+//<pre>{JSON.stringify(userss)}</pre>
 export default User;
 
 export const getServerSideProps = async () => {
   try {
     const { data } = await api.get("/users");
 
-    console.log("data usuarios ", data);
+    //console.log("data usuarios ", data);
 
     return {
       props: {

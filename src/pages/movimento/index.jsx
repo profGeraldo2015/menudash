@@ -3,9 +3,13 @@ import { BsPersonFill, BsThreeDotsVertical } from "react-icons/bs";
 //port { data } from '../../data/data.js';
 import api from "../../services/api";
 import { useState } from "react";
+import UIDate from "@/components/UIDate";
+import UINumber from "@/components/UINumber";
+//import { Dialog } from "@headlessui/react";
+//import Modal from "../../components/Modal";
 
-const Movimento = ({ registros: fetchedMovimento, ok, campos }) => {
-  //console.log('campos vindo da query dentro do next ', campos)
+const Movimento = ({ registros: fetchedMovimento, ok, campos, plano2 }) => {
+  console.log("campos planos2 ", plano2);
 
   const [camposDB, setCamposDB] = useState(campos);
   const [registros, setRegistros] = useState(fetchedMovimento);
@@ -14,30 +18,17 @@ const Movimento = ({ registros: fetchedMovimento, ok, campos }) => {
     //usar registros para fazer a tela de entrada de dados inclusao
     for (let i = 0; i < camposDB.length; i++) {
       console.log("campo vindo da query ", camposDB[i]);
-      console.log(camposDB[1])
+      console.log(camposDB[1]);
     }
   } else console.log("nao tem");
 
-  /*type registro = {
-    
-    id: number;
-    nome: string;
-    cpf: string;
-}
-
-linha 52<!--BsPersonFill className='text-purple-800' /-->
-
-*/
-
   return (
-
-
-
     <div className="bg-gray-100 min-h-screen">
       <div className="flex justify-between p-4">
-        <h2>Movimentos</h2>
-        <h2>Welcome Back, Clint</h2>
+        <h2 className="text-titulo">Movimentos</h2>
+        <h2 className="text-black text-[14px] p-3">Welcome Back, Clint</h2>
       </div>
+
       <div className="p-4">
         <div className="w-full m-auto p-4 border rounded-lg bg-white overflow-y-auto">
           <div className="my-3 p-2 grid md:grid-cols-7 sm:grid-cols-3 grid-cols-2 items-center justify-left cursor-pointer">
@@ -69,9 +60,13 @@ linha 52<!--BsPersonFill className='text-purple-800' /-->
                 <p className="text-gray-600 sm:text-left text-right">
                   {movto.obs}
                 </p>
-                <p className="hidden md:flex">{movto.dt_vencto}</p>
+                <p className="hidden md:flex">
+                  <UIDate>{movto.dt_vencto}</UIDate>
+                </p>
                 <div className="sm:flex hidden justify-between items-center">
-                  <p>{movto.valor}</p>
+                  <p>
+                    <UINumber format="0.00">{movto.valor}</UINumber>
+                  </p>
                   <BsThreeDotsVertical />
                 </div>
               </li>
@@ -106,5 +101,15 @@ export const getServerSideProps = async () => {
       },
     };
   }
-  //return data;
 };
+
+/*type registro = {
+  
+    id: number;
+    nome: string;
+    cpf: string;
+}
+
+linha 52<!--BsPersonFill className='text-purple-800' /-->
+
+*/

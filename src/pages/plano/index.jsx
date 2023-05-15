@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from "react";
 import api from "../../services/api";
 //import { data } from '../../data/data.js'
-import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
-
+import { BsPersonFill, BsThreeDotsVertical } from "react-icons/bs";
+import UIDate from "@/components/UIDate";
+import UINumber from "@/components/UINumber";
 
 export default function Plano({ registros: fetchedPlano }) {
 
-const userLogado = "Zezinho da Coves"
+  const userLogado = "Zezinho da Coves";
 
   const [registros, setRegistros] = useState(fetchedPlano);
 
   return (
     <div>
-      
       <div className="bg-gray-100 min-h-screen">
         <div className="flex justify-between p-4">
           <h2>Plano de Contas</h2>
@@ -41,9 +41,14 @@ const userLogado = "Zezinho da Coves"
                   <p className="text-gray-600 sm:text-left text-right">
                     {movto.descricao}
                   </p>
-                  <p className="hidden md:flex">{movto.saldo_iniv}</p>
+                  <p className="hidden md:flex">
+                    
+                    <UINumber format="0.00">{movto.saldo_iniv}</UINumber>
+                  </p>
                   <div className="sm:flex hidden justify-between items-center">
-                    <p>{movto.dt_saldo}</p>
+                    <p>
+                      <UIDate>{movto.dt_saldo}</UIDate>
+                    </p>
                     <BsThreeDotsVertical />
                   </div>
                 </li>
@@ -71,11 +76,10 @@ export const getServerSideProps = async () => {
     //console.log(err);
     return {
       props: {
-          registros: [],
-          ok : false
+        registros: [],
+        ok: false,
       },
-  };
-    
+    };
   }
   //return data;
 };
